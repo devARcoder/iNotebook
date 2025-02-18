@@ -1,0 +1,16 @@
+{
+  "name": "inotebook",
+  "version": "1.0.0",
+  "description": "iNotebook - your Notebook on the cloud",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1"
+  }
+}
