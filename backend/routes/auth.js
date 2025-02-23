@@ -5,6 +5,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const JWT_SECRET = "devarcoder"
 // post request - localhost:5000/api/auth/createuser
 router.post(
   "/createuser",
@@ -36,7 +37,17 @@ router.post(
         email: req.body.email,
         password: secPass
       });
-      res.json({ success: "Your email has been successfully added" });
+
+      const data = {
+        user:{
+          id: user.id
+        }
+      }
+      const authToken = jwt.sign(data, JWT_SECRET);
+      res.json({authToken})
+      // res.json({ success: "Your email has been successfully added" });
+
+
     } catch (error) {
       console.error(error.message);
       res.status(500).send("some error ocuure");
