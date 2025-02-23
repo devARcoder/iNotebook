@@ -50,9 +50,45 @@ router.post(
 
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("some error ocuure");
+      res.status(500).send("Internal server error");
     }
   }
 );
 
+// post request - localhost:5000/api/auth/login
+router.post(
+  "/login",
+  [
+    body("email", "Enter a Valid Email").isEmail(),
+    body("password", "Password cannot be empty").exists(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {email, password} = req.body;
+    try {
+      let user = await User.findOne({email});
+      if (!user){
+        return res.status(400).json({error: "Please try to login with correct credential."});
+      }
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare){
+        return res.status(400).json({error: "Please try to login with correct credential."});
+      }
+      const data = {
+        user:{
+          id: user.id
+        }
+      }
+      const authToken = jwt.sign(data, JWT_SECRET);
+      res.json({authToken})
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal server error n 2");
+    }
+    })
+    
 module.exports = router;
