@@ -4,9 +4,10 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = "devarcoder";
+const fetchuser = require("../middleware/fetchuser")
 
-const JWT_SECRET = "devarcoder"
-// post request - localhost:5000/api/auth/createuser
+//ROUTER 1: post request - localhost:5000/api/auth/createuser
 router.post(
   "/createuser",
   [
@@ -55,7 +56,7 @@ router.post(
   }
 );
 
-// post request - localhost:5000/api/auth/login
+//ROUTER 2: post request - localhost:5000/api/auth/login
 router.post(
   "/login",
   [
@@ -89,6 +90,18 @@ router.post(
       console.error(error.message);
       res.status(500).send("Internal server error n 2");
     }
-    })
+    });
+
+    // ROUTER 3: post request - localhost:5000/api/auth/getuser - login required
+    router.post("/getuser",fetchuser ,async (req, res) => { 
+    try {
+      userId = req.user.id;
+      const user = await User.findById(userId).select("-password")
+      res.send(user)
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal server error n 2");
+    }
+  })
     
 module.exports = router;
