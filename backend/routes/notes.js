@@ -14,9 +14,9 @@ router.get("/fetchallnotes", fetchuser, async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
-// RIUTER 2 Post request - localhost:5000/api/notes/addnotes - login required
+// RIUTER 2 Post request - localhost:5000/api/notes/addnote - login required
 router.post(
-  "/addnotes",
+  "/addnote",
   fetchuser,
   [
     body("title", "Enter a Valid Title").isLength({ min: 3 }),
@@ -31,7 +31,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      const note = new Note({
+      const note = new Notes({
         title,
         description,
         tag,
