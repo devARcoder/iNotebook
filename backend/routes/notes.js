@@ -38,7 +38,7 @@ router.post(
         user: req.user.id,
       });
       const savedNotes = await note.save();
-      res.json({Success:"Note has been Added", savedNotes:savedNotes});
+      res.json({ Success: "Note has been Added", savedNotes: savedNotes });
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal server error");
@@ -76,7 +76,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
       { $set: newNote },
       { new: true }
     );
-    res.json({Success: "Note has been Updated", updateNote: updateNote});
+    res.json({ Success: "Note has been Updated", updateNote: updateNote });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error");
