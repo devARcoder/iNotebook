@@ -1,14 +1,15 @@
 import React, { useContext }  from 'react'
 import noteContext from "../context/notes/noteContext";
 import NoteItem from './NoteItem';
+import AddNote from './AddingNote'; 
 const Notes = () => {
-    const context = useContext(noteContext);
-  const {notes, setNotes} = context;
+  const context = useContext(noteContext);
+  const {notes, addNote} = context;
   // eslint-disable-next-line
   return (
     <>
       <div className="">
-        
+        <AddNote/>
           <h1 className="flex justify-center items-center text-4xl text-center font-bold mb-6 mt-10 ">Your Notes</h1>
           <div className="row m-3">
             {notes.map((note)=>{
