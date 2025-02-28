@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <div className=" m-3">
         <h1 className="text-4xl text-center font-bold my-3">Add a Note</h1>
-        <form className="mx-4">
+        <form className="mx-4 my-3">
           <div class="mb-3 ">
             <label for="exampleInputEmail1" class="form-label">
               Email address
