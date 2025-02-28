@@ -9,10 +9,10 @@ const Notes = () => {
     <>
       <div className="">
         
-          <h1 className="flex justify-center items-center text-4xl text-center font-bold mb-10 ">Your Notes</h1>
-          <div className="row m-3 ">
+          <h1 className="flex justify-center items-center text-4xl text-center font-bold mb-6 mt-10 ">Your Notes</h1>
+          <div className="row m-3">
             {notes.map((note)=>{
-              return <NoteItem note={note}/>
+              return <NoteItem key={note._id} note={note}/>
 
             })}
           </div>
