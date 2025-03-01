@@ -22,42 +22,7 @@ const NoteState = (props) => {
       "date": "2025-02-27T04:39:24.149Z",
       "__v": 0
     },
-    {
-      "_id": "67bc265664c0210666f0f825",
-      "user": "67bc05eeaafa76e86ab5fccb",
-      "title": "NewsMonkey App",
-      "description": "newsmonkey app was created by abdurrazzaq his portfolio name devarcoder and using rectjs, tailwindcss and newsapi",
-      "tag": "web application full Responsive",
-      "date": "2025-02-24T07:57:10.402Z",
-      "__v": 0
-    },
-    {
-      "_id": "67bfec7c54b9b65c53c96c5d",
-      "user": "67bc05eeaafa76e86ab5fccb",
-      "title": "Youtube_Clone",
-      "description": "Youtube Web App my favourit project and its my biggener app and using tailwindcss and newsapi",
-      "tag": "YouTube Application",
-      "date": "2025-02-27T04:39:24.149Z",
-      "__v": 0
-    },
-    {
-      "_id": "67bc265664c0210666f0f825",
-      "user": "67bc05eeaafa76e86ab5fccb",
-      "title": "NewsMonkey App",
-      "description": "newsmonkey app was created by abdurrazzaq his portfolio name devarcoder and using rectjs, tailwindcss and newsapi",
-      "tag": "web application full Responsive",
-      "date": "2025-02-24T07:57:10.402Z",
-      "__v": 0
-    },
-    {
-      "_id": "67bfec7c54b9b65c53c96c5d",
-      "user": "67bc05eeaafa76e86ab5fccb",
-      "title": "Youtube_Clone",
-      "description": "Youtube Web App my favourit project and its my biggener app and using tailwindcss and newsapi",
-      "tag": "YouTube Application",
-      "date": "2025-02-27T04:39:24.149Z",
-      "__v": 0
-    },
+    
   ]
 
   const [notes, setNotes] = useState(notesInitial)
@@ -79,8 +44,10 @@ const NoteState = (props) => {
 
   }
   // delete a note
-  const deleteNote = () =>{
-
+  const deleteNote = (id) =>{
+    const newNotes = notes.filter((note)=>{return note._id !== id})
+    setNotes(newNotes)
+    console.log("delete note by id: ", id)
   }
   // edit a note
   const editNote = () =>{
