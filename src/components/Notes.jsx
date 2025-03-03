@@ -9,6 +9,7 @@ const Notes = () => {
   const ref = useRef(null);
   const refClose = useRef(null);
   const [note, setNote] = useState({
+    id: "",
     etitle: "",
     edescription: "",
     etag: "",
@@ -74,7 +75,7 @@ const Notes = () => {
                     <label htmlFor="etitle" className="form-label">
                       Title
                     </label>
-                    <input
+                    <input minLength={3} required
                       type="text"
                       className="form-control"
                       id="etitle"
@@ -88,7 +89,7 @@ const Notes = () => {
                     <label htmlFor="edescription" className="form-label">
                       Description
                     </label>
-                    <input
+                    <input minLength={5} required
                       type="text"
                       className="form-control"
                       id="edescription"
@@ -101,7 +102,7 @@ const Notes = () => {
                     <label htmlFor="etag" className="form-label">
                       Tag
                     </label>
-                    <input
+                    <input 
                       type="text"
                       className="form-control"
                       id="etag"
@@ -132,6 +133,9 @@ const Notes = () => {
         <h1 className="flex justify-center items-center text-4xl text-center font-bold mb-6 mt-10 ">
           Your Notes
         </h1>
+        <div className="container text-center my-3 text-1xl font-semibold text-gray-500">
+          {notes.length===0 && 'No Notes to Display'}
+        </div>
         <div className="row m-3">
           {notes.map((note) => {
             return (
