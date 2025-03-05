@@ -2,8 +2,10 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddingNote";
+import { useNavigate } from 'react-router-dom';
 
-const Notes = () => {
+const Notes = (props) => {
+  const navigate = useNavigate();
   const context = useContext(noteContext);
   const { notes, getNotes, editNote} = context;
   const ref = useRef(null);
@@ -15,18 +17,27 @@ const Notes = () => {
     etag: "",
   });
   useEffect(() => {
-    getNotes();
-    // eslint-disable-next-line
-  }, []);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    } else {
+      getNotes();
+      // eslint-disable-next-line
+    }
+  }, []); 
+  // eslint-disable-next-line
+  
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag})
+    setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag});
+    props.showAlert("Note Updated Successfully", "success");
   };
 
   const handleClick = (e) => {
     
     editNote(note.id, note.etitle, note.edescription, note.etag)
-    refClose.current.click()
+    refClose.current.click();
+    props.showAlert("Note Updated Successfully", "success");
     
   };
   const onChange = (e) => {
@@ -36,7 +47,7 @@ const Notes = () => {
   return (
     <>
       <div className="">
-        <AddNote />
+        <AddNote showAlert={props.showAlert} />
         {/* <!-- Button trigger modal --> */}
         {/* <button
           ref={ref}
@@ -139,7 +150,7 @@ const Notes = () => {
         <div className="row m-3">
           {notes.map((note) => {
             return (
-              <NoteItem key={note._id} updateNote={updateNote} note={note} />
+              <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
             );
           })}
         </div>

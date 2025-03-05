@@ -9,14 +9,13 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import profile from '../Assets/profile.png';
-import logo from '../Assets/logo.png';
-
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+// import profile from '../Assets/profile.png';
+// import logo from '../Assets/logo.png';
+import { useNavigate } from 'react-router-dom';
 const navigation = [
   { name: "Home", to: "/" },
   { name: "About", to: "/about" },
-  { name: "Contact", to: "/" },
 ];
 
 function classNames(...classes) {
@@ -24,6 +23,11 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = () =>{
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
   let location = useLocation();
 
   useEffect(() => {
@@ -45,11 +49,12 @@ const Navbar = () => {
           {/* Logo and Links */}
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <img
+              {/* <img
                 alt="Your Company"
                 src={logo}
                 className="h-10 w-auto"
-              />
+              /> */}
+              <h1 className="text-white font-2xl font-bold">devARcoder</h1>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -73,22 +78,23 @@ const Navbar = () => {
 
           {/* Notifications and Profile */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
+            {/* <button
               type="button"
               className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             >
               <BellIcon aria-hidden="true" className="size-6" />
-            </button>
+            </button> */}
 
             {/* Profile Dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
-                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <img
+                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                  {/* <img
                     alt=""
                     src={profile}
                     className="size-8 rounded-full"
-                  />
+                  /> */}
+                  <i className="fa-solid fa-circle-user text-white text-3xl"></i>
                 </MenuButton>
               </div>
               <MenuItems
@@ -96,6 +102,7 @@ const Navbar = () => {
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5"
               >
                 <MenuItem>
+                
                   <Link
                     to="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -103,7 +110,9 @@ const Navbar = () => {
                     Your Profile
                   </Link>
                 </MenuItem>
+                {!localStorage.getItem('token')?<div>
                 <MenuItem>
+                
                   <Link
                     to="/login"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -119,6 +128,14 @@ const Navbar = () => {
                     Sign Up
                   </Link>
                 </MenuItem>
+                </div>: <MenuItem>
+                  <Link onClick={handleLogout}
+                    to="/login"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Logout
+                  </Link>
+                </MenuItem>}
               </MenuItems>
             </Menu>
           </div>

@@ -18,9 +18,10 @@ router.post(
     }),
   ],
   async (req, res) => {
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() });
     }
 
     try {
@@ -28,7 +29,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ error: "sorry this email already exist" });
+          .json({success, error: "sorry this email already exist" });
       }
 
       const salt = await bcrypt.genSalt()
@@ -44,8 +45,9 @@ router.post(
           id: user.id
         }
       }
-      const authToken = jwt.sign(data, JWT_SECRET);
-      res.json({authToken})
+      const authtoken = jwt.sign(data, JWT_SECRET);
+      success = true
+      res.json({success, authtoken})
       // res.json({ success: "Your email has been successfully added" });
 
 
@@ -87,9 +89,9 @@ router.post(
           id: user.id
         }
       }
-      const authToken = jwt.sign(data, JWT_SECRET);
+      const authtoken = jwt.sign(data, JWT_SECRET);
       success = true
-      res.json({success, authToken})
+      res.json({success, authtoken})
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal server error n 2");

@@ -19,7 +19,9 @@ const NoteItem = (props) => {
     
   </div>
   <div className="">
-  <i className="fa-solid fa-trash mx-2 my-2 bg-red-500 p-2 text-white text-xl rounded-md cursor-pointer" onClick={()=>{deleteNote(note._id)}}></i>
+  <i className="fa-solid fa-trash mx-2 my-2 bg-red-500 p-2 text-white text-xl rounded-md cursor-pointer" onClick={()=>{deleteNote(note._id);
+    props.showAlert("Note Deleted Successfully", "success");
+  }}></i>
   <i className="fa-solid fa-pen-to-square mx-2 bg-blue-500 p-2 text-white text-xl rounded-md cursor-pointer" onClick={()=>{updateNote(note)}}></i>
   {/* <i className="fa-solid fa-plus mx-2 bg-green-500 p-2 text-white text-xl rounded-md cursor-pointer"></i> */}
   </div>

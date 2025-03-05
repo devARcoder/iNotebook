@@ -1,31 +1,60 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    // my code
+  //   const response = await fetch("http://localhost:5000/api/auth/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email: credentials.email,
+  //       password: credentials.password,
+  //     }),
+  //   });
+  //   const json = await response.json();
+  //   console.log(json);
+  //   if (json.success){
+  //       // save the auth token and redirect
+  //       localStorage.setItem('token', json.authtoken);
+  //       props.showAlert("Logged In Successfully", "success")
+  //       navigate('/');
+  //   }
+  //   else{
+  //     props.showAlert("invalid Credentials", "danger")
+  //   }
+
+  
+
+  // chatgpt code
+  const response = await fetch("http://localhost:5000/api/auth/login", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
         email: credentials.email,
         password: credentials.password,
-      }),
-    });
-    const json = await response.json();
-    console.log(json);
-    if (json.success){
-        // save the auth token and redirect
-        localStorage.setItem('token', json.authtoken);
-        navigate('/');
-    }
-    else{
-        alert("invalid credentials")
-    }
+    }),
+});
+
+const json = await response.json();
+
+if (json.success && json.authtoken) { // Ensure token exists
+    localStorage.setItem('token', json.authtoken);
+    console.log("Stored Token:", localStorage.getItem('token')); // Debug storage
+    props.showAlert("Logged In Successfully", "success");
+    navigate('/');
+} else {
+    console.error("Login failed, invalid response:", json);
+    props.showAlert("Invalid Credentials", "danger");
+}
+
   };
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
